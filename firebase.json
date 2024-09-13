@@ -2,7 +2,7 @@
   "hosting": [
     {
       "target": "solicitou-admin-web-desenvolvimento",
-      "public": "dist/solicitou-web",
+      "public": "dist",
       "ignore": [
         "firebase.json",
         "**/.*",
@@ -17,7 +17,7 @@
     },
     {
       "target": "solicitou-admin-web-homologacao",
-      "public": "dist/solicitou-web",
+      "public": "dist",
       "ignore": [
         "firebase.json",
         "**/.*",
@@ -32,7 +32,7 @@
     },
     {
       "target": "solicitou-admin-web-producao",
-      "public": "dist/solicitou-web",
+      "public": "dist",
       "ignore": [
         "firebase.json",
         "**/.*",
