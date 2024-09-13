@@ -8,21 +8,21 @@
     "solicitou-desenvolvimento": {
       "hosting": {
         "solicitou-admin-web-desenvolvimento": [
-          "solicitou-desenvolvimento"
+          "solicitou-admin-web-desenvolvimento"
         ]
       }
     },
     "solicitou-homologacao": {
       "hosting": {
         "solicitou-admin-web-homologacao": [
-          "solicitou-homologacao"
+          "solicitou-admin-web-homologacao"
         ]
       }
     },
     "solicitou-producao": {
       "hosting": {
         "solicitou-admin-web-producao": [
-          "solicitou-producao"
+          "solicitou-admin-web-producao"
         ]
       }
     }
