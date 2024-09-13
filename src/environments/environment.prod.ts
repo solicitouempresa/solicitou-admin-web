@@ -1,12 +1,12 @@
 export const environment = {
   firebase: {
-    apiKey: "AIzaSyCz2x5BHX3ZtE6z3G4MF13LzitxDlFzIdU",
-    authDomain: "solicitou-homologacao.firebaseapp.com",
-    projectId: "solicitou-homologacao",
-    storageBucket: "solicitou-homologacao.appspot.com",
-    messagingSenderId: "857072152227",
-    appId: "1:857072152227:web:6b6c04ceec4372fba19916",
-    measurementId: "G-63LBDC8K06"
+    apiKey: "AIzaSyC1MSvDCM7GOGUObME8ytDbkLdaRQwc17c",
+    authDomain: "solicitou-producao.firebaseapp.com",
+    projectId: "solicitou-producao",
+    storageBucket: "solicitou-producao.appspot.com",
+    messagingSenderId: "476531413733",
+    appId: "1:476531413733:web:5878eb95eacf7b751f7a0c",
+    measurementId: "G-B25S7N4PN0"
   },
   production: true,
   hmr: false

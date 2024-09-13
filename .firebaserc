@@ -21,8 +21,8 @@
     },
     "solicitou-producao": {
       "hosting": {
-        "solicitou-admin-web-producao": [
-          "solicitou-admin-web-producao"
+        "solicitou-admin-web": [
+          "solicitou-admin-web"
         ]
       }
     }
