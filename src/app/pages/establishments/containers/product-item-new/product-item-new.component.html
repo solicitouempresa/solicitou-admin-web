@@ -1,0 +1,73 @@
+<app-layout>
+
+    <mat-toolbar class="page-header" role="heading">
+        <h1>Novo do Item do Produto</h1>
+        <button mat-raised-button color="primary" (click)="back()">Voltar</button>
+    </mat-toolbar>
+
+    <mat-spinner *ngIf="loading"></mat-spinner>
+
+    <div *ngIf="!loading" class="form-case">
+        <form [formGroup]="formItemProduct" (ngSubmit)="submit()">
+            <mat-form-field appearance="outline">
+                <mat-label>Nome do Item do Produto</mat-label>
+                <input matInput #nameItemProduto maxlength="32" placeholder="Insira o nome do item do produto" formControlName="name">
+                <mat-hint align="end">{{nameItemProduto.value.length}} / 32</mat-hint>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Descrição do Item do Produto</mat-label>
+                <textarea matInput #descriptionItemProduto maxlength="60" placeholder="Insira a descrição do item do produto" formControlName="description"></textarea>
+                <mat-hint align="end">{{descriptionItemProduto.value.length}} / 60</mat-hint>
+            </mat-form-field>
+            <!-- CAMPO REQUIRED SE CASO FOR OBRIGATORIO -->
+            <mat-slide-toggle formControlName="required">Obrigatório</mat-slide-toggle>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Sequência</mat-label>
+                <input matInput min="0" type="number" class="example-right-align" placeholder="0" formControlName="sequence">
+                <mat-hint>A ordem que o item do produto vai aparecer para o cliente</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Tipo de Item</mat-label>
+                <mat-select formControlName="type" class="select" (selectionChange)="onSelect($event)">
+                    <mat-option *ngFor="let item of typeItemProduct" [value]="item.id" class="select" >
+                        {{item.name}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint>Se vai aparece um campo de quantidade ou de opção.</mat-hint>
+            </mat-form-field>
+        
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Quantidade máxima para escolher do item</mat-label>
+                <input matInput min="0" type="number" class="example-right-align" placeholder="0" formControlName="quantityMax" >
+                <mat-hint>Máximo permitido de quantidade para o item</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Quantidade mínima para escolher do item</mat-label>
+                <input matInput min="0" type="number" class="example-right-align" placeholder="0" formControlName="quantityMin">
+                <mat-hint>Mínimo permitido de quantidade para o item</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Opções máxima para escolher do item</mat-label>
+                <input matInput min="0" type="number" class="example-right-align" placeholder="0" formControlName="quantityOptionMax" >
+                <mat-hint>Opções máxima permitido de quantidade para o item</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Opções mínima para escolher do item</mat-label>
+                <input matInput min="0" type="number" class="example-right-align" placeholder="0" formControlName="quantityOptionMin">
+                <mat-hint>Opções mínima permitido de quantidade para o item</mat-hint>
+            </mat-form-field>
+          
+            <button mat-button mat-raised-button color="primary" type="submit" class="button-submit"
+                [disabled]="!formItemProduct.valid">Cadastrar Item do Produto</button>
+
+        </form>
+        </div>
+
+    <footer></footer>
+</app-layout>

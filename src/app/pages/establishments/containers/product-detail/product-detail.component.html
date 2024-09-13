@@ -1,0 +1,170 @@
+<app-layout>
+    <mat-toolbar class="page-header" role="heading">
+        <h1>Detalhes do produto</h1>
+        <button mat-raised-button color="primary" (click)="back()">Voltar</button>
+    </mat-toolbar>
+    <mat-spinner *ngIf="loading"></mat-spinner>
+    <div *ngIf="!loading" class="form-case">
+        <app-image (evento)="receiveImage($event)" valor="{{urlImageDefault}}"></app-image>
+        <form [formGroup]="formProduct" (ngSubmit)="submit()">
+            <mat-form-field appearance="outline">
+                <mat-label>Logotipo</mat-label>
+                <input matInput placeholder="nome de sua imagem" formControlName="urlImage" readonly>
+              </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Nome do produto</mat-label>
+                <input matInput placeholder="Insira o nome do produto" formControlName="name">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Descrição</mat-label>
+                <textarea matInput placeholder="Insira a descrição do produto" formControlName="description"></textarea>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Posição no Menu</mat-label>
+                <mat-select formControlName="categoryMenu" class="select">
+                    <mat-option *ngFor="let menuProduct of categoryMenuProduct" [value]="menuProduct.id" class="select">
+                        {{menuProduct.name}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint>Posição que vai aparecer dentro do menu para o cliente final.</mat-hint>
+            </mat-form-field>
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Preço</mat-label>
+                <input matInput min="0" type="number" class="example-right-align" placeholder="0" formControlName="price">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Ingredientes</mat-label>
+                <textarea matInput placeholder="Insira os Ingredientes do produto"
+                    formControlName="sideDish"></textarea>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Sequência</mat-label>
+                <input matInput min="0" type="number" class="example-right-align" placeholder="0" formControlName="sequence">
+                <mat-hint>A ordem que o produto vai aparecer para o cliente</mat-hint>
+            </mat-form-field>
+            <button mat-button mat-raised-button color="primary" type="submit" class="button-submit"
+                [disabled]="!formProduct.valid">Atualizar Produto</button>
+
+        </form>
+    </div>
+
+    <mat-toolbar class="page-header" role="heading">
+      <h1>Item do Produto</h1>
+    </mat-toolbar>
+    <button
+      mat-raised-button
+      color="primary"
+      class="botao-menu"
+      (click)="newItemProduct()"
+    >
+      Cadastrar novo Item do Produto
+    </button>
+    <!-- <mat-spinner *ngIf="loadingItemProduct"></mat-spinner> -->
+
+  <!-- <div class="mat-elevation-z8" *ngIf="!loadingItemProduct"> -->
+    <!-- <div class="mat-elevation-z8" > -->
+    <!-- <button mat-raised-button color="primary" (click)="loadTableItemProduct()" class="button">Atualizar dados</button> -->
+    <div class="filtro">
+    <mat-form-field appearance="outline">
+      <mat-label>Filtro</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="buscar por item do produto" #input>
+    </mat-form-field>
+  </div>
+  <div id="tabela">
+    <table id="basic-table" class="employee-table__table" mat-table [dataSource]="dataSource" matSort>
+
+      <!-- Menu Column -->
+      <!-- <ng-container matColumnDef="menu">
+        <th class="employee-table__table-checkbox" mat-header-cell *matHeaderCellDef>
+          Ações
+        </th>
+        <td class="employee-table__table-checkbox" mat-cell *matCellDef="let row">
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="edit(row.id)">
+              <mat-icon>edit</mat-icon>
+              <span>Editar</span>
+            </button>
+            <button mat-menu-item (click)="delete(row.id)">
+              <mat-icon>delete</mat-icon>
+              <span>Excluir</span>
+            </button>
+            <button mat-menu-item (click)="deactivate(row.id)">
+              <mat-icon>settings_power</mat-icon>
+              <span>Desativar</span>
+            </button>
+          
+          </mat-menu>
+        </td>
+      </ng-container> -->
+
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+        <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+      </ng-container>
+
+      <!-- Bairro Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th>
+        <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+      </ng-container>
+
+      <!-- Nome Column -->
+      <ng-container matColumnDef="sequence">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Posição </th>
+        <td mat-cell *matCellDef="let row"> {{row.sequence}} </td>
+      </ng-container>
+
+      <!-- Cidade Column -->
+      <ng-container matColumnDef="required">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Obrigatório </th>
+        <td mat-cell *matCellDef="let row"> {{row.required}} </td>
+      </ng-container>
+
+
+
+
+      <!-- Editar Column -->
+      <ng-container matColumnDef="editar">
+        <th mat-header-cell *matHeaderCellDef> Editar </th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-icon-button class="button-action" (click)="edit(row.id)">
+            <mat-icon style="color:blue">edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <!-- <ng-container matColumnDef="excluir">
+        <th mat-header-cell *matHeaderCellDef> Excluir </th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-icon-button class="button-action" (click)="delete(row.id)">
+            <mat-icon style="color:red">delete</mat-icon>
+          </button>
+        </td>
+      </ng-container> -->
+      <ng-container matColumnDef="desativar">
+        <th mat-header-cell *matHeaderCellDef> Ativar/Desativar </th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-icon-button class="button-action" (click)="deactivate(row)">
+            <mat-icon *ngIf="row.status == true" style="color:green">settings_power</mat-icon>
+            <mat-icon *ngIf="row.status == false" style="color:red">settings_power</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <!-- Row shown when there is no matching data. -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">Não foi encontrado dados </td>
+      </tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Selecione a página de item do produto"></mat-paginator>
+  </div>
+</app-layout>

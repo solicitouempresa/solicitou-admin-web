@@ -1,0 +1,431 @@
+<app-layout>
+  <mat-toolbar class="page-header" role="heading">
+    <h1>Detalhes do estabelecimento</h1>
+    <button mat-raised-button color="primary" (click)="back()">Voltar</button>
+  </mat-toolbar>
+
+  <mat-spinner *ngIf="loading"></mat-spinner>
+  <div *ngIf="!loading" class="form-case">
+    <app-image
+      (evento)="receiveImage($event)"
+      valor="{{ urlImageDefault }}"
+    ></app-image>
+
+    <form [formGroup]="formEstablishment" (ngSubmit)="submit()">
+      <mat-form-field appearance="outline">
+        <mat-label>Logotipo</mat-label>
+        <input
+          matInput
+          placeholder="nome de sua imagem"
+          formControlName="urlImage"
+          readonly
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Nome do estabelecimento</mat-label>
+        <input
+          matInput
+          placeholder="Insira o nome do estabelecimento"
+          formControlName="name"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>URL do estabelecimento</mat-label>
+        <input
+          matInput
+          placeholder="Insira como quer que apereça a url do estabelecimento"
+          formControlName="urlName"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>E-mail</mat-label>
+        <input matInput type="email" placeholder="Insira um e-mail" formControlName="email">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Login</mat-label>
+        <input matInput placeholder="Insira um username" formControlName="login">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Senha</mat-label>
+        <input matInput placeholder="Insira uma senha" formControlName="password">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>CNPJ ou CPF</mat-label>
+        <input
+          type="number"
+          matInput
+          placeholder="Insira CNPJ ou CPF"
+          formControlName="cnpj"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Tipo Estabelecimento</mat-label>
+        <mat-select formControlName="typeEstablishment" class="select">
+          <mat-option
+            *ngFor="let establishment of categoryEstablishment"
+            [value]="establishment.id"
+            class="select"
+          >
+            {{ establishment.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Segmento</mat-label>
+        <mat-select formControlName="typeRestaurant" class="select">
+          <mat-option
+            *ngFor="let restaurant of categoryRestaurant"
+            [value]="restaurant.id"
+            class="select"
+          >
+            {{ restaurant.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-google-maps-autocomplete 
+      placeholderText="Insira e Selecione seu endereço"
+      addressLabelText="Endereço"
+                              appearance="outline"
+                              country="br"
+                              type="address"
+                              (onAutocompleteSelected)="onAutocompleteSelected($event)"
+                              (onLocationSelected)="onLocationSelected($event)">
+      </mat-google-maps-autocomplete>
+      <mat-form-field appearance="outline">
+        <mat-label>CEP</mat-label>
+        <input
+          type="number"
+          matInput
+          placeholder="Insira o CEP do estabelecimento"
+          formControlName="zipcode"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Número</mat-label>
+        <input
+          type="number"
+          matInput
+          placeholder="Insira o número do estabelecimento"
+          formControlName="number"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Complemento</mat-label>
+        <input type="text" matInput placeholder="Se houver insira Bloco/Apartamento" formControlName="complement">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Referência</mat-label>
+        <input type="text" matInput placeholder="Insira o Referência do estabelecimento" formControlName="reference">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Tipo Pix</mat-label>
+        <mat-select formControlName="pixType" class="select">
+          <mat-option
+            *ngFor="let itemPix of typesPix"
+            [value]="itemPix.name"
+            class="select"
+          >
+            {{ itemPix.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Número Pix</mat-label>
+        <input
+          matInput
+          placeholder="Insira o número do pix"
+          formControlName="pixNumber"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Nome do Favorecido</mat-label>
+        <input
+          matInput
+          placeholder="Insira o nome do favorecido do pix"
+          formControlName="pixName"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>DDD</mat-label>
+        <input
+          matInput
+          type="number"
+          placeholder="Insira o DDD"
+          formControlName="ddd"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Contato do Estabelecimento</mat-label>
+        <input
+          matInput
+          type="number"
+          placeholder="Insira o contato do estabelecimento"
+          formControlName="numberContact"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Contato Whatsapp</mat-label>
+        <input
+          matInput
+          type="number"
+          placeholder="Insira o contato do whatsapp"
+          formControlName="numberWhatsapp"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Contato Telegram</mat-label>
+        <input
+          matInput
+          type="number"
+          placeholder="Insira o contato do telegram"
+          formControlName="numberTelegram"
+        />
+      </mat-form-field>
+      <!-- <mat-slide-toggle formControlName="deliveryFee">Taxa de Entrega Grátis</mat-slide-toggle> -->
+    
+      <mat-form-field appearance="outline">
+        <mat-label>Custo por produto</mat-label>
+        <span matSuffix>%</span>
+        <input matInput min="0" type="number" placeholder="Insira quanto deve aumentar a % de custo por Produto" formControlName="feeProduct">
+      </mat-form-field>
+
+      
+      <mat-form-field appearance="outline">
+        <mat-label>Custo do frete inicial fixo</mat-label>
+        <span matSuffix>R$</span>
+        <input matInput min="0" type="number" placeholder="Insira quanto deve ser inicio do custo do frete por KM" formControlName="initialDeliveryFee">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Começar a calcular por KM apartir do KM</mat-label>
+        <span matSuffix>METROS</span>
+        <input matInput min="0" type="number" placeholder="Começar a multiplicar por qual KM" formControlName="addFromKm">
+        <mat-hint>COLOQUE EM METROS</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Custo do frete por KM</mat-label>
+        <span matSuffix>X</span>
+        <input matInput min="0" type="number" placeholder="Insira quanto deve aumentar o custo do frete por KM" formControlName="deliveryCostToKm">
+      </mat-form-field>
+      <div>
+        <mat-slide-toggle formControlName="agendamento">Seu Estabelecimento oferece agendamento ?</mat-slide-toggle>
+      </div>
+      <button
+        mat-button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        class="button-submit"
+        [disabled]="!formEstablishment.valid"
+      >
+        Atualizar Estabelecimento
+      </button>
+    </form>
+  </div>
+
+  <mat-toolbar class="page-header" role="heading">
+    <h1>Categorias de Produto</h1>
+  </mat-toolbar>
+  <button
+    mat-raised-button
+    color="primary"
+    class="botao-menu"
+    (click)="submitCategoryProduct()"
+  >
+    Cadastrar nova Categoria de Produto
+  </button>
+
+  <div id="tabela">
+    <table
+      id="basic-table"
+      class="mat-elevation-z8"
+      mat-table
+      [dataSource]="dataSourceCategoryProduct"
+      matSort
+    >
+     
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+        <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Nome Categoria
+        </th>
+        <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="sequence">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Sequencia</th>
+        <td mat-cell *matCellDef="let row">{{ row.sequence }}</td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Status
+        </th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.status ? "Ativo" : "Inativo" }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="editar">
+        <th mat-header-cell *matHeaderCellDef>Editar</th>
+        <td mat-cell *matCellDef="let row">
+          <button
+            mat-icon-button
+            class="button-action"
+            (click)="editCategoryProduct(row.id)"
+          >
+            <mat-icon style="color: blue">edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <!-- <ng-container matColumnDef="excluir">
+        <th mat-header-cell *matHeaderCellDef>Excluir</th>
+        <td mat-cell *matCellDef="let row">
+          <button
+            mat-icon-button
+            class="button-action"
+            (click)="delete(row.id)"
+          >
+            <mat-icon style="color: red">delete</mat-icon>
+          </button>
+        </td>
+      </ng-container> -->
+      <ng-container matColumnDef="desativar">
+        <th mat-header-cell *matHeaderCellDef>Ativar/Desativar</th>
+        <td mat-cell *matCellDef="let row">
+          <button
+            mat-icon-button
+            class="button-action"
+            (click)="deactivateCategoryProduct(row)"
+          >
+            <mat-icon *ngIf="row.status == true" style="color: green"
+              >settings_power</mat-icon
+            >
+            <mat-icon *ngIf="row.status == false" style="color: red"
+              >settings_power</mat-icon
+            >
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumnsCategoryProduct"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumnsCategoryProduct"></tr>
+    </table>
+  </div> 
+
+  
+  <mat-toolbar class="page-header" role="heading">
+    <h1>Produtos</h1>
+  </mat-toolbar>
+  <button
+    mat-raised-button
+    color="primary"
+    class="botao-menu"
+    (click)="submitMenu()"
+  >
+    Cadastrar novo produto
+  </button>
+
+  <div class="filtro">
+    <mat-form-field appearance="outline" >
+      <mat-label>Filtro</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="buscar por produto" #input>
+    </mat-form-field>
+  </div>
+  <div id="tabela">
+    <table
+      id="basic-table"
+      class="mat-elevation-z8"
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+    >
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+        <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Nome do Produto
+        </th>
+        <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Preço</th>
+        <td mat-cell *matCellDef="let row">{{ row.price }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.statusActive ? "Ativo" : "Inativo" }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="sequence">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Sequencia</th>
+        <td mat-cell *matCellDef="let row">{{ row.sequence }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="editar">
+        <th mat-header-cell *matHeaderCellDef>Editar</th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-icon-button class="button-action" (click)="edit(row.id)">
+            <mat-icon style="color: blue">edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <!-- <ng-container matColumnDef="excluir">
+        <th mat-header-cell *matHeaderCellDef>Excluir</th>
+        <td mat-cell *matCellDef="let row">
+          <button
+            mat-icon-button
+            class="button-action"
+            (click)="delete(row.id)"
+          >
+            <mat-icon style="color: red">delete</mat-icon>
+          </button>
+        </td>
+      </ng-container> -->
+      <ng-container matColumnDef="desativar">
+        <th mat-header-cell *matHeaderCellDef>Ativar/Desativar</th>
+        <td mat-cell *matCellDef="let row">
+          <button
+            mat-icon-button
+            class="button-action"
+            (click)="deactivate(row)"
+          >
+            <mat-icon *ngIf="row.statusActive == true" style="color: green"
+              >settings_power</mat-icon
+            >
+            <mat-icon *ngIf="row.statusActive == false" style="color: red"
+              >settings_power</mat-icon
+            >
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+       <!-- Row shown when there is no matching data. -->
+       <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">Não foi encontrado dados "{{input.value}}"</td>
+      </tr>
+      
+    </table>
+    <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 100]"
+    aria-label="Selecione a página de estabelecimentos"></mat-paginator>
+  </div>
+
+
+</app-layout>

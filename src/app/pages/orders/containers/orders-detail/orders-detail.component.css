@@ -1,0 +1,11 @@
+.section { 
+    display: grid;
+}
+
+mat-card {
+    width: 100%;
+}
+
+.print{
+    margin-left: 2%;
+}

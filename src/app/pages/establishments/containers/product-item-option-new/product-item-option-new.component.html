@@ -1,0 +1,43 @@
+<app-layout>
+
+    <mat-toolbar class="page-header" role="heading">
+        <h1>Nova Opção Item do Produto</h1>
+        <button mat-raised-button color="primary" (click)="back()">Voltar</button>
+    </mat-toolbar>
+
+    <mat-spinner *ngIf="loading"></mat-spinner>
+
+    <div *ngIf="!loading" class="form-case">
+        <form [formGroup]="formOptionItemProduct" (ngSubmit)="submit()">
+            <mat-form-field appearance="outline">
+                <mat-label>Nome</mat-label>
+                <input matInput #nameItemProduto maxlength="32"  placeholder="Insira o nome do item do produto" formControlName="name">
+                <mat-hint align="end">{{nameItemProduto.value.length}} / 32</mat-hint>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Descrição</mat-label>
+                <textarea matInput #descriptionItemProduto  maxlength="60"  placeholder="Insira a descrição do item do produto" formControlName="description"></textarea>
+                <mat-hint align="end">{{descriptionItemProduto.value.length}} / 60</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Sequência</mat-label>
+                <input matInput min="0" type="number" class="example-right-align" placeholder="0" formControlName="sequence">
+                <mat-hint>A ordem que a opção do item do produto vai aparecer para o cliente</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Preço</mat-label>
+                <input matInput min="0" type="number" class="example-right-align" placeholder="0" formControlName="priceOption">
+                <span matSuffix>&nbsp; R$ </span>
+                <mat-hint>Preço do item</mat-hint>
+            </mat-form-field>
+          
+            <button mat-button mat-raised-button color="primary" type="submit" class="button-submit"
+                [disabled]="!formOptionItemProduct.valid">Cadastrar Opção Item do Produto</button>
+
+        </form>
+        </div>
+
+    <footer></footer>
+</app-layout>

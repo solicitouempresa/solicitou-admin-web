@@ -1,0 +1,27 @@
+<app-layout>
+    <mat-toolbar class="page-header" role="heading">
+        <h1>Cadastrar nova categoria</h1>
+        <button mat-raised-button color="primary" (click)="back()">Voltar</button>
+    </mat-toolbar>
+    <mat-spinner *ngIf="loading"></mat-spinner>
+    <div *ngIf="!loading" class="form-case">
+        <form [formGroup]="formCategoryProduct" (ngSubmit)="submit()">
+           
+            <mat-form-field appearance="outline">
+                <mat-label>Nome da Categoria</mat-label>
+                <input matInput placeholder="Insira o nome da Categoria do Produto" formControlName="name">
+                <mat-hint>Máximo de 30 caracteres</mat-hint>
+
+            </mat-form-field>
+      
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Sequência</mat-label>
+                <input matInput min="0" type="number" class="example-right-align" placeholder="Insira qual ordem deve aparecer" formControlName="sequence">
+            </mat-form-field>
+
+            <button mat-button mat-raised-button color="primary" type="submit" class="button-submit"
+                [disabled]="!formCategoryProduct.valid">Atualizar Categoria</button>
+
+        </form>
+        </div>
+</app-layout>

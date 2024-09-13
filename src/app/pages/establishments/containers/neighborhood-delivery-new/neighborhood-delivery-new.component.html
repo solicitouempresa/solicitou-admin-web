@@ -1,0 +1,38 @@
+<app-layout>
+  <mat-toolbar class="page-header" role="heading">
+    <h1>Cadastrar novo bairro para entrega</h1>
+  </mat-toolbar>
+  <mat-spinner *ngIf="loading"></mat-spinner>
+  <div *ngIf="!loading" class="form-case">
+    <form [formGroup]="formNeighborhoodDelivery" (ngSubmit)="submit()">
+      <mat-form-field appearance="outline">
+        <mat-label>Nome do Bairro</mat-label>
+        <mat-select formControlName="name" class="select">
+          <mat-option
+            *ngFor="let itemNeighborhoods of neighborhoodsDATA"
+            [value]="itemNeighborhoods"
+            class="select"
+          >
+            {{ itemNeighborhoods.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Taxa de Entrega:</mat-label>
+        <input matInput type="number" formControlName="zone" min="0" formControlName="deliveryFee" />
+      </mat-form-field>
+
+      <button
+        mat-button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        class="button-submit"
+        [disabled]="!formNeighborhoodDelivery.valid"
+      >
+        Cadastrar Bairro
+      </button>
+    </form>
+  </div>
+</app-layout>

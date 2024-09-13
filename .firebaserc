@@ -1,0 +1,32 @@
+{
+  "projects": {
+    "default": "solicitou-desenvolvimento",
+    "solicitou-homologacao": "solicitou-homologacao",
+    "solicitou-producao": "solicitou-producao"
+  },
+  "targets": {
+    "solicitou-desenvolvimento": {
+      "hosting": {
+        "solicitou-admin-web-desenvolvimento": [
+          "solicitou-desenvolvimento"
+        ]
+      }
+    },
+    "solicitou-homologacao": {
+      "hosting": {
+        "solicitou-admin-web-homologacao": [
+          "solicitou-homologacao"
+        ]
+      }
+    },
+    "solicitou-producao": {
+      "hosting": {
+        "solicitou-admin-web-producao": [
+          "solicitou-producao"
+        ]
+      }
+    }
+  },
+  "etags": {},
+  "dataconnectEmulatorConfig": {}
+}

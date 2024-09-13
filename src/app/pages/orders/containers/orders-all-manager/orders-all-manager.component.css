@@ -1,0 +1,35 @@
+table{
+    width: 100%;
+}
+
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  td, th {
+    width: 10%;
+  }
+  
+  .loading {
+    display: grid;
+    justify-content: center;
+  }
+  .pagination-labels{
+    display: grid;
+    justify-items: flex-end;
+  }
+  .pagination-button {
+    display: flex;
+  }
+  .pagination-button .mat-button-base{
+    margin: 8px 8px 8px 0;
+  }
+  .size{
+    display: flex;
+  }
+  
+  .button{
+    float: right;
+    margin: 22px;
+  }

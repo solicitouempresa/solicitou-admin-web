@@ -1,0 +1,15 @@
+<mat-card class="example-card">
+    <img mat-card-image src="{{urlImage}}">
+    <!-- <img mat-card-image [src]="urlImage"> -->
+    <mat-card-actions>
+      <button mat-button><input type="file" (change)="onChange($event)"></button>
+      <button mat-raised-button (click)="submit()" color="primary">Upload..</button>
+    </mat-card-actions>
+</mat-card>
+
+<div>
+  
+</div>
+<!-- <div>
+    <button class="btn btn-success" >Upload</button>
+</div> -->

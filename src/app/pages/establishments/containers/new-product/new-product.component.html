@@ -1,0 +1,51 @@
+<app-layout>
+    <mat-toolbar class="page-header" role="heading">
+        <h1>Cadastrar novo produto</h1>
+        <button mat-raised-button color="primary" (click)="back()">Voltar</button>
+    </mat-toolbar>
+    <mat-spinner *ngIf="loading"></mat-spinner>
+    <div *ngIf="!loading" class="form-case">
+        <app-image (evento)="receiveImage($event)"></app-image>
+        <form [formGroup]="formProduct" (ngSubmit)="submit()">
+            <mat-form-field appearance="outline">
+                <mat-label>Logotipo</mat-label>
+                <input matInput placeholder="nome de sua imagem" formControlName="urlImage" readonly>
+              </mat-form-field> 
+            <mat-form-field appearance="outline">
+                <mat-label>Nome do produto</mat-label>
+                <input matInput placeholder="Insira o nome do produto" formControlName="name">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Descrição</mat-label>
+                <textarea matInput placeholder="Insira a descrição do produto" formControlName="description"></textarea>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Posição no Menu</mat-label>
+                <mat-select formControlName="categoryMenu" class="select">
+                    <mat-option *ngFor="let menuProduct of categoryMenuProduct" [value]="menuProduct" class="select">
+                        {{menuProduct.name}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint>Posição que vai aparecer dentro do menu para o cliente final.</mat-hint>
+            </mat-form-field>
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Preço</mat-label>
+                <input matInput [(ngModel)]="priceFinal" min="0" type="number" class="example-right-align" placeholder="0" formControlName="price" onchange="calcPriceFinal()">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Ingredientes</mat-label>
+                <textarea matInput placeholder="Insira os Ingredientes do produto"
+                    formControlName="sideDish"></textarea>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Sequência</mat-label>
+                <input matInput min="0" type="number" class="example-right-align" placeholder="0" formControlName="sequence">
+                <mat-hint>A ordem que o produto vai aparecer para o cliente</mat-hint>
+            </mat-form-field>
+            <button mat-button mat-raised-button color="primary" type="submit" class="button-submit"
+                [disabled]="!formProduct.valid">Cadastrar Estabelecimento</button>
+
+        </form>
+        </div>
+</app-layout>

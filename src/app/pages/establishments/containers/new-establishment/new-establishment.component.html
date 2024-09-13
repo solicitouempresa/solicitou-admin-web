@@ -1,0 +1,200 @@
+<app-layout>
+  <mat-toolbar class="page-header" role="heading">
+    <h1>Cadastrar Novo Estabelecimento</h1>
+  </mat-toolbar>
+
+  <div class="loading-container" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <div *ngIf="!loading" class="form-container">
+    <app-image (evento)="receiveImage($event)"></app-image>
+
+    <form [formGroup]="formEstablishment" (ngSubmit)="submit()" class="establishment-form">
+
+      <div class="form-section">
+        <mat-form-field appearance="outline">
+          <mat-label>Logotipo</mat-label>
+          <input matInput placeholder="Nome de sua imagem" formControlName="urlImage" readonly>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nome do Estabelecimento</mat-label>
+          <input matInput placeholder="Insira o nome do estabelecimento" formControlName="name">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nome URL</mat-label>
+          <input matInput placeholder="Nome que vai aparecer na URL" formControlName="urlName">
+        </mat-form-field>
+      </div>
+
+      <div class="form-section">
+        <mat-form-field appearance="outline">
+          <mat-label>CNPJ ou CPF</mat-label>
+          <input type="number" matInput placeholder="Insira CNPJ ou CPF" formControlName="cnpj">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>E-mail</mat-label>
+          <input matInput type="email" placeholder="Insira um e-mail" formControlName="email">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Login</mat-label>
+          <input matInput placeholder="Insira um username" formControlName="login">
+        </mat-form-field>
+      </div>
+
+      <div class="form-section">
+        <mat-form-field appearance="outline">
+          <mat-label>Senha</mat-label>
+          <input matInput placeholder="Insira uma senha" formControlName="password" type="password">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Tipo Estabelecimento</mat-label>
+          <mat-select formControlName="typeEstablishment">
+            <mat-option *ngFor="let establishment of categoryEstablishment" [value]="establishment.id">
+              {{establishment.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Segmento</mat-label>
+          <mat-select formControlName="typeRestaurant">
+            <mat-option *ngFor="let restaurant of categoryRestaurant" [value]="restaurant.id">
+              {{restaurant.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="form-section">
+        <mat-google-maps-autocomplete 
+          placeholderText="Insira e Selecione seu endereço"
+          addressLabelText="Endereço"
+          appearance="outline"
+          country="br"
+          type="address"
+          (onAutocompleteSelected)="onAutocompleteSelected($event)"
+          (onLocationSelected)="onLocationSelected($event)">
+        </mat-google-maps-autocomplete>
+
+        <mat-form-field appearance="outline">
+          <mat-label>CEP</mat-label>
+          <input type="number" matInput placeholder="Insira o CEP do estabelecimento" formControlName="zipcode">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Número</mat-label>
+          <input type="number" matInput placeholder="Insira o número do estabelecimento" formControlName="number">
+        </mat-form-field>
+      </div>
+
+      <div class="form-section">
+        <mat-form-field appearance="outline">
+          <mat-label>Complemento</mat-label>
+          <input type="text" matInput placeholder="Se houver, insira Bloco/Apartamento" formControlName="complement">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Referência</mat-label>
+          <input type="text" matInput placeholder="Insira a referência do estabelecimento" formControlName="reference">
+        </mat-form-field>
+      </div>
+
+      <div class="form-section">
+        <mat-form-field appearance="outline">
+          <mat-label>Tipo Pix</mat-label>
+          <mat-select formControlName="pixType">
+            <mat-option *ngFor="let itemPix of typesPix" [value]="itemPix.name">
+              {{itemPix.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Número Pix</mat-label>
+          <input matInput placeholder="Insira o número do Pix" formControlName="pixNumber">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nome do Favorecido</mat-label>
+          <input matInput placeholder="Insira o nome do favorecido do Pix" formControlName="pixName">
+        </mat-form-field>
+      </div>
+
+      <div class="form-section">
+        <mat-form-field appearance="outline">
+          <mat-label>DDD</mat-label>
+          <input matInput type="number" placeholder="Insira o DDD" formControlName="ddd">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Contato do Estabelecimento</mat-label>
+          <input matInput placeholder="Insira o contato do estabelecimento" formControlName="numberContact">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Contato Whatsapp</mat-label>
+          <input matInput placeholder="Insira o contato do Whatsapp" formControlName="numberWhatsapp">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Contato Telegram</mat-label>
+          <input matInput placeholder="Insira o contato do Telegram" formControlName="numberTelegram">
+        </mat-form-field>
+      </div>
+
+      <div class="form-section">
+        <mat-form-field appearance="outline">
+          <mat-label>Custo por Produto</mat-label>
+          <input matInput min="0" type="number" placeholder="Insira o aumento de custo por produto" formControlName="feeProduct">
+          <span matSuffix>%</span>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Custo do Frete Inicial Fixo</mat-label>
+          <input matInput min="0" type="number" placeholder="Custo inicial do frete por KM" formControlName="initialDeliveryFee">
+          <span matSuffix>R$</span>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Começar a calcular por KM a partir de</mat-label>
+          <input matInput min="0" type="number" placeholder="A partir de qual KM calcular" formControlName="addFromKm">
+          <span matSuffix>METROS</span>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Custo do Frete por KM</mat-label>
+          <input matInput min="0" type="number" placeholder="Aumento do custo do frete por KM" formControlName="deliveryCostToKm">
+          <span matSuffix>X</span>
+        </mat-form-field>
+        <div class="hours-title">
+          <h3>Horário do Estabelecimento:</h3>
+        </div>
+        <div class="form-section hours-section">
+          <div class="day-field" *ngFor="let day of weekDays">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ day.label }}</mat-label>
+              <input matInput type="text" placeholder="HH:mm-HH:mm" (input)="formatHours($event)" formControlName="{{ day.controlName }}">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <mat-slide-toggle formControlName="agendamento">Seu estabelecimento oferece agendamento?</mat-slide-toggle>
+      </div>
+
+      <div class="button-container">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!formEstablishment.valid">
+          Cadastrar Estabelecimento
+        </button>
+      </div>
+
+    </form>
+  </div>
+</app-layout>

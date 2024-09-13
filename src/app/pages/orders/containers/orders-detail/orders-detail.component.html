@@ -1,0 +1,116 @@
+<app-layout>
+    <mat-toolbar class="page-header" role="heading">
+        <h1>Detalhes do Pedido</h1>
+        <button mat-raised-button color="primary" (click)="back()">Voltar</button>
+        
+    </mat-toolbar>
+
+    <mat-spinner *ngIf="loading"></mat-spinner>
+    
+    <div *ngIf="!loading" id="print">
+        <!-- <form [formGroup]="formOrder" (ngSubmit)="submit()"> -->
+            <button mat-raised-button color="primary" (click)="print(orderData)" class="print">Imprimir</button>
+    <mat-card >
+       
+        <mat-card-header>
+           <b> Dados Cliente:</b>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="section">
+              <b>Nome: </b>  {{orderData.clientDelivery.name || ' - '}}
+              <b>Contato: </b>  {{orderData.clientDelivery.contact || ' - '}}
+              <b>E-mail: </b>  {{orderData.clientDelivery.email || ' - '}}
+            </div>
+          
+        </mat-card-content>
+    </mat-card>
+    <mat-card>
+        <mat-card-header>
+            <b> Dados Estabelecimento: </b>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="section">
+              <b> Nome: </b>  {{orderData.establishment.name || ' - '}}
+              <b> DDD: </b>  {{orderData.establishment.ddd || ' - '}}
+              <b> Número: </b>  {{orderData.establishment.numberContact || ' - '}}
+              <b> Endereço: </b>  {{orderData.establishment.address || ' - '}}
+              <b> Número do Endereço: </b>  {{orderData.establishment.number || ' - '}}
+              <b> Complemento: </b>  {{orderData.establishment.complement || ' - '}}
+              <b> Referência: </b>  {{orderData.establishment.reference || ' - '}}
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <mat-card>
+        <mat-card-header>
+            <b> Endereço Entrega: </b>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="section">
+              <b> Endereço </b>  {{orderData.addressDelivery.address || ' - '}}
+              <b> Número do Endereço: </b>  {{orderData.addressDelivery.number || ' - '}}
+              <b> Complemento: </b>  {{orderData.addressDelivery.complement || ' - '}}
+              <b> Referência: </b>  {{orderData.addressDelivery.reference || ' - '}}
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <mat-card>
+        <mat-card-header>
+            <b> Resumo Pedido: </b>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="section">
+            <b> Produtos: </b>  
+                    <span *ngFor="let item of orderData.productItem" class="section">
+                        <br>
+                        <b> ----------------------------------------- </b>
+                        <b> Nome: </b>   {{item.product.name}}
+                        <b> Preço: </b>   {{item.product.price | currency}}
+                        <b> Quantidade: </b>   {{item.quantity}}
+                        <div>
+                        <span *ngFor="let itemProduct of item.itensProduct " class="section">
+                            <br>
+                            <b> Itens adicionais: </b>  
+                            <b> ----------------------------------------- </b>
+                            <b> Nome: </b>   {{itemProduct.name}}
+                            <b> Preço: </b>   {{itemProduct.quantity | currency}}
+                            <b> Quantidade: </b>   {{itemProduct.priceOption}}
+                            <b> ----------------------------------------- </b>
+                            <br>
+                        </span>
+                    </div>
+                        <b> ----------------------------------------- </b>
+                        <br>
+                    </span>
+                    <br>
+              <b> Tipo Pagamento: </b>  {{orderData.typePayment || ' - '}}
+              <b> Valor Frete: </b>  {{orderData.rateDelivery | currency: 'BRL'}}
+              <b> Valor Serviço: </b>  {{orderData.rateService | currency: 'BRL'}}
+              <b> Valor Total: </b>  {{orderData.amount | currency: 'BRL' }}
+              <b> Valor Declarado para pagamento a vista: </b>  {{orderData.valueCash | currency: 'BRL' }}
+              <b> Valor de Troco para o Cliente: </b>  {{orderData.changeMoney | currency: 'BRL' }}
+              <b> Status Pagamento: </b>  {{orderData.statusPayment|| ' - '}}
+              <b> Status Pedido: </b>  {{orderData.statusOrder || ' - '}}
+              <b> Data do Pedido: </b>  {{orderData.dateCreated | date : 'dd/MM/yyyy HH:mm' || ' - '}}
+              <b> Data do Atualização do Pedido: </b>  {{orderData.dateUpdated | date : 'dd/MM/yyyy HH:mm' || ' - '}}
+              <b> Data do Cancelamento: </b>  {{orderData.statusDateCancel | date : 'dd/MM/yyyy HH:mm' || ' - '}}
+              <b> Data de Aceite: </b>  {{orderData.statusDateAccept | date : 'dd/MM/yyyy HH:mm' || ' - '}}
+              <b> Data do Inicio Entrega: </b>  {{orderData.statusDateDelivering | date : 'dd/MM/yyyy HH:mm' || ' - '}}
+              <b> Data do Final Entrega: </b>  {{orderData.statusDateDelivered | date : 'dd/MM/yyyy HH:mm' || ' - '}}
+              <b> Data da Finalização Pedido: </b>  {{orderData.statusDateFinalized | date : 'dd/MM/yyyy HH:mm' || ' - '}}
+
+            </div>
+        </mat-card-content>
+    </mat-card>
+<!-- <button
+mat-button
+mat-raised-button
+color="warn"
+type="submit"
+class="button-concluir-pedido"
+[disabled]="!formOrder.valid"
+>
+Concluir Pedido
+</button> -->
+<!-- </form> -->
+    </div>
+</app-layout>
